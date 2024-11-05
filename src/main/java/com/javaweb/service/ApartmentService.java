@@ -1,7 +1,8 @@
+
+// src/main/java/com/javaweb/service/ApartmentService.java
 package com.javaweb.service;
 
 import com.javaweb.dto.ApartmentDTO;
-import com.javaweb.repository.entity.ApartmentEntity;
 import com.javaweb.repository.entity.ContractEntity;
 
 import java.util.List;
@@ -14,5 +15,7 @@ public interface ApartmentService {
     void deleteById(Long id);
     List<ContractEntity> findContractsByApartmentId(Long apartmentId);
     List<ApartmentDTO> findByBuildingId(Long buildingId);
-
+    ApartmentDTO getApartmentById(Long id);
+    void createApartment(ApartmentDTO apartmentDTO);
+    public void updateApartment(ApartmentDTO apartmentDTO) ;// Add this method
 }

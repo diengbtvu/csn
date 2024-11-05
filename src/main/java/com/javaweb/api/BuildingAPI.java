@@ -1,10 +1,10 @@
+// src/main/java/com/javaweb/api/BuildingAPI.java
 package com.javaweb.api;
 
 import com.javaweb.dto.BuildingDTO;
 import com.javaweb.dto.ApartmentDTO;
-import com.javaweb.repository.entity.BuildingEntity;
+import com.javaweb.dto.BuildingAnalyticsDTO;
 import com.javaweb.service.BuildingService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +17,10 @@ public class BuildingAPI {
 
     @Autowired
     private BuildingService buildingService;
-    @Autowired
-    private ModelMapper modelMapper;
 
     @GetMapping
     public List<BuildingDTO> getAllBuildings() {
-        List<BuildingDTO> buildingDTOS = buildingService.findAll();
-        return buildingDTOS;
+        return buildingService.findAll();
     }
 
     @GetMapping("/{id}")
@@ -40,8 +37,7 @@ public class BuildingAPI {
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateBuilding(@PathVariable Long id, @RequestBody BuildingDTO buildingDTO) {
         buildingDTO.setId(id);
-        BuildingEntity buildingEntity = modelMapper.map(buildingDTO, BuildingEntity.class);
-        buildingService.saveAndFlush(buildingEntity);
+        buildingService.updateBuilding(buildingDTO);
         return ResponseEntity.ok().build();
     }
 
@@ -54,5 +50,10 @@ public class BuildingAPI {
     @GetMapping("/apartments/{districtId}")
     public List<ApartmentDTO> getApartmentsByDistrictId(@PathVariable Long districtId) {
         return buildingService.findApartmentEntityByDistrictId(districtId);
+    }
+
+    @GetMapping("/analytics")
+    public List<BuildingAnalyticsDTO> getBuildingAnalytics() {
+        return buildingService.getBuildingAnalytics();
     }
 }

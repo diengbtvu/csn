@@ -1,12 +1,18 @@
 package com.javaweb.dto;
 
+import java.util.Date;
+
 public class ApartmentDTO {
     private Long id;
     private String name;
-    private String address;
-    private int floor;
-    private double area;
-    private Long districtId;
+    private Double minRate;
+    private Double floorArea;
+    private Integer numberOfBedrooms;
+    private Integer numberOfBathrooms;
+    private Boolean rented;
+    private Date moveInDate;
+    private Date moveOutDate;
+    private Long buildingId;
 
     // Getters and Setters
     public Long getId() {
@@ -25,35 +31,67 @@ public class ApartmentDTO {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public Double getMinRate() {
+        return minRate;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setMinRate(Double minRate) {
+        this.minRate = minRate;
     }
 
-    public int getFloor() {
-        return floor;
+    public Double getFloorArea() {
+        return floorArea;
     }
 
-    public void setFloor(int floor) {
-        this.floor = floor;
+    public void setFloorArea(Double floorArea) {
+        this.floorArea = floorArea;
     }
 
-    public double getArea() {
-        return area;
+    public Integer getNumberOfBedrooms() {
+        return numberOfBedrooms;
     }
 
-    public void setArea(double area) {
-        this.area = area;
+    public void setNumberOfBedrooms(Integer numberOfBedrooms) {
+        this.numberOfBedrooms = numberOfBedrooms;
     }
 
-    public Long getDistrictId() {
-        return districtId;
+    public Integer getNumberOfBathrooms() {
+        return numberOfBathrooms;
     }
 
-    public void setDistrictId(Long districtId) {
-        this.districtId = districtId;
+    public void setNumberOfBathrooms(Integer numberOfBathrooms) {
+        this.numberOfBathrooms = numberOfBathrooms;
+    }
+
+    public Boolean getRented() {
+        return rented;
+    }
+
+    public void setRented(Boolean rented) {
+        this.rented = rented;
+    }
+
+    public Date getMoveInDate() {
+        return moveInDate;
+    }
+
+    public void setMoveInDate(Date moveInDate) {
+        this.moveInDate = moveInDate;
+    }
+
+    public Date getMoveOutDate() {
+        return moveOutDate;
+    }
+
+    public void setMoveOutDate(Date moveOutDate) {
+        this.moveOutDate = moveOutDate;
+    }
+
+    public Long getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(Long buildingId) {
+        this.buildingId = buildingId;
     }
 }

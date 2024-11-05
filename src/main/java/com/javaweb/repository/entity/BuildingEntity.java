@@ -1,6 +1,7 @@
 package com.javaweb.repository.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "building")
@@ -18,7 +19,15 @@ public class BuildingEntity {
     @ManyToOne
     @JoinColumn(name = "district_id", nullable = false)
     private DistrictEntity district; // Add this field
+    @OneToMany(mappedBy = "building")
+    private List<ApartmentEntity> apartments;
+    public List<ApartmentEntity> getApartments() {
+        return apartments;
+    }
 
+    public void setApartments(List<ApartmentEntity> apartments) {
+        this.apartments = apartments;
+    }
     // Getters and Setters
     public Long getId() {
         return id;
