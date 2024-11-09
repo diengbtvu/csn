@@ -4,7 +4,7 @@
 | **Student**    | Trần Minh Điền (Student ID: 110122050, DA22TTA) |
 
 
-# Building & Apartment Management System
+## Building & Apartment Management System
 
 A comprehensive Spring Boot application for managing buildings, apartments, users, contracts and customers.
 
