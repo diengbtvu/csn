@@ -3,213 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Building Management</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Building & Apartment Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
-<div class="container mx-auto py-8">
-    <h1 class="text-3xl font-bold mb-6">Building Management</h1>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white shadow-lg rounded-lg p-6">
-            <h2 class="text-xl font-bold mb-4">Building List</h2>
-            <div class="overflow-x-auto">
-                <table class="w-full table-auto">
-                    <thead>
-                    <tr class="bg-gray-200">
-                        <th class="px-4 py-2">Name</th>
-                        <th class="px-4 py-2">Address</th>
-                        <th class="px-4 py-2">Floors</th>
-                        <th class="px-4 py-2">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody id="building-list">
-                    </tbody>
-                </table>
+<body>
+    <div class="container">
+        <h1>Building & Apartment Management</h1>
+        
+        <!-- Buildings Section -->
+        <div class="section">
+            <h2>Buildings</h2>
+            <button class="button" onclick="getAllBuildings()">Get All Buildings</button>
+            <button class="button" onclick="getBuildingAnalytics()">Get Building Analytics</button>
+            <div id="buildingResult" class="result"></div>
+            
+            <h3>Create Building</h3>
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" id="buildingName">
+                <label>Address:</label>
+                <input type="text" id="buildingAddress">
+                <label>Number of Floors:</label>
+                <input type="number" id="buildingFloors">
+                <button class="button" onclick="createBuilding()">Create Building</button>
             </div>
         </div>
 
-        <div class="bg-white shadow-lg rounded-lg p-6">
-            <h2 class="text-xl font-bold mb-4">Building Details</h2>
-            <form id="building-form" class="space-y-4">
-                <div>
-                    <label for="name" class="block font-medium mb-2">Name</label>
-                    <input type="text" id="name" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                </div>
-                <div>
-                    <label for="address" class="block font-medium mb-2">Address</label>
-                    <input type="text" id="address" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                </div>
-                <div>
-                    <label for="numberOfFloors" class="block font-medium mb-2">Number of Floors</label>
-                    <input type="number" id="numberOfFloors" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                </div>
-                <div>
-                    <label for="totalArea" class="block font-medium mb-2">Total Area</label>
-                    <input type="number" id="totalArea" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                </div>
-                <div>
-                    <label for="type" class="block font-medium mb-2">Type</label>
-                    <input type="text" id="type" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                </div>
-                <div>
-                    <label for="contactNumber" class="block font-medium mb-2">Contact Number</label>
-                    <input type="text" id="contactNumber" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                </div>
-                <div>
-                    <label for="districtId" class="block font-medium mb-2">District ID</label>
-                    <input type="number" id="districtId" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                </div>
-                <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-md">
-                    Save Building
-                </button>
-            </form>
+        <!-- Apartments Section -->
+        <div class="section">
+            <h2>Apartments</h2>
+            <button class="button" onclick="getAllApartments()">Get All Apartments</button>
+            <div id="apartmentResult" class="result"></div>
+            
+            <h3>Create Apartment</h3>
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" id="apartmentName">
+                <label>Floor Area:</label>
+                <input type="number" id="floorArea">
+                <label>Building ID:</label>
+                <input type="number" id="buildingId">
+                <button class="button" onclick="createApartment()">Create Apartment</button>
+            </div>
         </div>
     </div>
 
-    <div class="bg-white shadow-lg rounded-lg p-6 mt-6">
-        <h2 class="text-xl font-bold mb-4">Building Analytics</h2>
-        <div class="flex justify-center">
-            <canvas id="building-chart" width="400" height="400"></canvas>
-        </div>
-    </div>
-</div>
+    <script>
+        const BASE_URL = 'http://localhost:8081';
 
-<script>
-    // Fetch and display building list
-    function fetchBuildingList() {
-        fetch('/buildings')
-            .then(response => response.json())
-            .then(data => {
-                const buildingList = document.getElementById('building-list');
-                buildingList.innerHTML = '';
+        // Building APIs
+        async function getAllBuildings() {
+            try {
+                const response = await fetch(`${BASE_URL}/buildings`);
+                const data = await response.json();
+                document.getElementById('buildingResult').innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('buildingResult').innerText = `Error: ${error.message}`;
+            }
+        }
 
-                data.forEach(building => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td class="px-4 py-2">${building.name}</td>
-                        <td class="px-4 py-2">${building.address}</td>
-                        <td class="px-4 py-2">${building.numberOfFloors}</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-1 px-2 rounded-md mr-2" onclick="showBuildingDetails(${building.id})">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white font-medium py-1 px-2 rounded-md" onclick="deleteBuildingById(${building.id})">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </td>
-                    `;
-                    buildingList.appendChild(row);
-                });
-            })
-            .catch(error => console.error(error));
-    }
+        async function getBuildingAnalytics() {
+            try {
+                const response = await fetch(`${BASE_URL}/buildings/analytics`);
+                const data = await response.json();
+                document.getElementById('buildingResult').innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('buildingResult').innerText = `Error: ${error.message}`;
+            }
+        }
 
-    // Show building details in the form
-    function showBuildingDetails(buildingId) {
-        fetch(`/buildings/${buildingId}`)
-            .then(response => response.json())
-            .then(building => {
-                document.getElementById('name').value = building.name;
-                document.getElementById('address').value = building.address;
-                document.getElementById('numberOfFloors').value = building.numberOfFloors;
-                document.getElementById('totalArea').value = building.totalArea;
-                document.getElementById('type').value = building.type;
-                document.getElementById('contactNumber').value = building.contactNumber;
-                document.getElementById('districtId').value = building.districtId;
-            })
-            .catch(error => console.error(error));
-    }
-
-    // Create a new building
-    document.getElementById('building-form').addEventListener('submit', (event) => {
-        event.preventDefault();
-        const name = document.getElementById('name').value;
-        const address = document.getElementById('address').value;
-        const numberOfFloors = document.getElementById('numberOfFloors').value;
-        const totalArea = document.getElementById('totalArea').value;
-        const type = document.getElementById('type').value;
-        const contactNumber = document.getElementById('contactNumber').value;
-        const districtId = document.getElementById('districtId').value;
-
-        fetch('/buildings', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name,
-                address,
-                numberOfFloors,
-                totalArea,
-                type,
-                contactNumber,
-                districtId
-            })
-        })
-            .then(response => {
-                if (response.ok) {
-                    alert('Building created successfully!');
-                    fetchBuildingList();
-                    document.getElementById('building-form').reset();
-                } else {
-                    alert('Error creating building.');
-                }
-            })
-            .catch(error => console.error(error));
-    });
-
-    // Delete a building by ID
-    function deleteBuildingById(buildingId) {
-        fetch(`/buildings/${buildingId}`, {
-            method: 'DELETE'
-        })
-            .then(response => {
-                if (response.ok) {
-                    alert('Building deleted successfully!');
-                    fetchBuildingList();
-                } else {
-                    alert('Error deleting building.');
-                }
-            })
-            .catch(error => console.error(error));
-    }
-
-    // Building analytics chart
-    function generateBuildingAnalyticsChart() {
-        fetch('/buildings/analytics')
-            .then(response => response.json())
-            .then(data => {
-                const ctx = document.getElementById('building-chart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: data.map(item => item.name),
-                        datasets: [{
-                            label: 'Total Apartments',
-                            data: data.map(item => item.totalApartments),
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
+        async function createBuilding() {
+            try {
+                const building = {
+                    name: document.getElementById('buildingName').value,
+                    address: document.getElementById('buildingAddress').value,
+                    numberOfFloors: parseInt(document.getElementById('buildingFloors').value),
+                };
+                
+                const response = await fetch(`${BASE_URL}/buildings`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
                     },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                precision: 0
-                            }
-                        }
-                    }
+                    body: JSON.stringify(building)
                 });
-            })
-            .catch(error => console.error(error));
-    }
+                
+                if (response.ok) {
+                    document.getElementById('buildingResult').innerText = 'Building created successfully';
+                    getAllBuildings();
+                }
+            } catch (error) {
+                document.getElementById('buildingResult').innerText = `Error: ${error.message}`;
+            }
+        }
 
-    fetchBuildingList();
-    generateBuildingAnalyticsChart();
-</script>
+        // Apartment APIs
+        async function getAllApartments() {
+            try {
+                const response = await fetch(`${BASE_URL}/apartments`);
+                const data = await response.json();
+                document.getElementById('apartmentResult').innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('apartmentResult').innerText = `Error: ${error.message}`;
+            }
+        }
+
+        async function createApartment() {
+            try {
+                const apartment = {
+                    name: document.getElementById('apartmentName').value,
+                    floorArea: parseFloat(document.getElementById('floorArea').value),
+                    buildingId: parseInt(document.getElementById('buildingId').value)
+                };
+                
+                const response = await fetch(`${BASE_URL}/apartments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(apartment)
+                });
+                
+                if (response.ok) {
+                    document.getElementById('apartmentResult').innerText = 'Apartment created successfully';
+                    getAllApartments();
+                }
+            } catch (error) {
+                document.getElementById('apartmentResult').innerText = `Error: ${error.message}`;
+            }
+        }
+    </script>
 </body>
 </html>
