@@ -1,7 +1,7 @@
 # Project Information
-|------------------------------|-------------------------------------------|
-| **Supervisor**               | Dr. Nguyễn Bảo Ân                         |
-| **Student**                  | Trần Minh Điền (Student ID: 110122050, DA22TTA) |
+| **Supervisor** | Dr. Nguyễn Bảo Ân |
+|----------------|--------------------|
+| **Student**    | Trần Minh Điền (Student ID: 110122050, DA22TTA) |
 
 
 # Building & Apartment Management System
