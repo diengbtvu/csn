@@ -13,7 +13,6 @@ public interface ApartmentService {
     Optional<ApartmentDTO> findById(Long id);
     ApartmentDTO save(ApartmentDTO apartmentDTO);
     void deleteById(Long id);
-    List<ContractEntity> findContractsByApartmentId(Long apartmentId);
     List<ApartmentDTO> findByBuildingId(Long buildingId);
     ApartmentDTO getApartmentById(Long id);
     void createApartment(ApartmentDTO apartmentDTO);

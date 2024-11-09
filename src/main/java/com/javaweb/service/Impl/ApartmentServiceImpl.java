@@ -48,11 +48,6 @@ public class ApartmentServiceImpl implements ApartmentService {
         apartmentRepository.deleteById(id);
     }
 
-    @Override
-    public List<ContractEntity> findContractsByApartmentId(Long apartmentId) {
-        // Implement this method based on your requirements
-        return null;
-    }
 
     @Override
     public List<ApartmentDTO> findByBuildingId(Long buildingId) {
