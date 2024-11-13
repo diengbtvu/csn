@@ -1,5 +1,3 @@
-Here is a guide for using the Building & Apartment Management APIs:
-
 # Building & Apartment Management API Guide
 
 ## Buildings API
