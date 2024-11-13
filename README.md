@@ -1,83 +1,195 @@
-# Building & Apartment Management System
+Here is a guide for using the Building & Apartment Management APIs:
 
-A Spring Boot application for managing buildings and apartments with REST APIs.
+# Building & Apartment Management API Guide
 
-## 🚀 Features
-- Building management (CRUD operations)
-- Apartment management
-- Contract tracking
-- Equipment inventory
-- Building analytics
-- District-based organization
+## Buildings API
 
-## 🛠 Tech Stack
-- Java 8
-- Spring Boot 2.0.9
-- Spring Data JPA
-- MySQL Database
-- ModelMapper
-- Maven
-- HTML/CSS/JavaScript (Frontend)
+### Get All Buildings
+```http
+GET /api/buildings
+```
+Returns a list of all buildings.
 
-## 🔧 Setup
-Configure your MySQL database in `application.properties`:
+### Get Building by ID 
+```http
+GET /api/buildings/{id}
+```
+Returns details for a specific building.
 
-Build the project:
-```bash
-mvn clean install
+### Create Building
+```http
+POST /api/buildings
+Content-Type: application/json
+
+{
+  "name": "Building Name",
+  "address": "Building Address",
+  "numberOfFloors": 10,
+  "totalArea": 1000.0,
+  "type": "Residential",
+  "contactNumber": "123-456-7890",
+  "districtId": 1
+}
 ```
 
-Run the application:
-```bash
-mvn spring-boot:run
+### Update Building
+```http
+PUT /api/buildings/{id}
+Content-Type: application/json
+
+{
+  "name": "Updated Name",
+  "address": "Updated Address",
+  "numberOfFloors": 12
+}
 ```
 
-## 🌐 API Endpoints
+### Delete Building
+```http
+DELETE /api/buildings/{id}
+```
 
-### Buildings
-- `GET /buildings` - Get all buildings
-- `GET /buildings/{id}` - Get building by ID
-- `POST /buildings` - Create new building
-- `PUT /buildings/{id}` - Update building
-- `DELETE /buildings/{id}` - Delete building
-- `GET /buildings/analytics` - Get building analytics
-- `GET /buildings/apartments/{districtId}` - Get apartments by district
+### Get Building Analytics
+```http
+GET /api/buildings/analytics
+```
+Returns analytics data for all buildings.
 
-### Apartments
-- `GET /apartments` - Get all apartments
-- `GET /apartments/{id}` - Get apartment by ID
-- `POST /apartments` - Create new apartment
-- `PUT /apartments/{id}` - Update apartment
-- `DELETE /apartments/{id}` - Delete apartment
+## Apartments API
 
-## Updating...
+### Get All Apartments
+```http
+GET /api/apartments
+```
+Returns a list of all apartments.
 
-## 🏗 Data Models
+### Get Apartment by ID
+```http
+GET /api/apartments/{id}
+```
 
-### Building Entity
-- ID
-- Name
-- Address
-- Number of floors
-- Total area
-- Type
-- Contact number
-- District reference
-- List of apartments
+### Create Apartment 
+```http
+POST /api/apartments
+Content-Type: application/json
 
-### Apartment Entity
-- ID
-- Name
-- Minimum rate
-- Floor area
-- Number of bedrooms/bathrooms
-- Rental status
-- Move in/out dates
-- Building reference
+{
+  "name": "Apartment Name",
+  "floorArea": 100.0,
+  "numberOfBedrooms": 2,
+  "numberOfBathrooms": 1,
+  "rented": false,
+  "buildingId": 1
+}
+```
 
-### Updating...
+### Update Apartment
+```http
+PUT /api/apartments/{id}
+Content-Type: application/json
 
-## 🔑 Key Classes
-- `BuildingAPI` - REST controller for building operations
-- `ApartmentAPI` - REST controller for apartment operations
-- Updating...
+{
+  "name": "Updated Name",
+  "floorArea": 120.0,
+  "rented": true
+}
+```
+
+### Delete Apartment
+```http
+DELETE /api/apartments/{id}
+```
+
+## Contracts API
+
+### Get All Contracts
+```http
+GET /api/contracts
+```
+
+### Get Contract by ID
+```http
+GET /api/contracts/{id}
+```
+
+### Create Contract
+```http
+POST /api/contracts
+Content-Type: application/json
+
+{
+  "apartmentId": 1,
+  "customerId": 1,
+  "startDate": "2024-01-01",
+  "endDate": "2024-12-31", 
+  "monthlyRent": 1000.0,
+  "deposit": 2000.0,
+  "paymentStatus": "PAID"
+}
+```
+
+### Update Contract
+```http
+PUT /api/contracts/{id}
+Content-Type: application/json
+
+{
+  "monthlyRent": 1200.0,
+  "paymentStatus": "PENDING"
+}
+```
+
+### Delete Contract
+```http
+DELETE /api/contracts/{id}
+```
+
+## Users API
+
+### Get All Users
+```http
+GET /api/users
+```
+
+### Get User by ID
+```http
+GET /api/users/{id}
+```
+
+### Get User by Username
+```http
+GET /api/users/username/{username}
+```
+
+### Create User
+```http
+POST /api/users
+Content-Type: application/json
+
+{
+  "userName": "username",
+  "password": "password",
+  "role": "USER"
+}
+```
+
+### Update User
+```http
+PUT /api/users/{id}
+Content-Type: application/json
+
+{
+  "userName": "newUsername",
+  "password": "newPassword" 
+}
+```
+
+### Delete User
+```http
+DELETE /api/users/{id}
+```
+
+All endpoints return appropriate HTTP status codes:
+- 200 OK for successful operations
+- 404 Not Found if resource doesn't exist
+- 400 Bad Request for invalid input
